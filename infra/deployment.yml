@@ -1,0 +1,26 @@
+resources:
+#
+# A bucket to hold deployment artefacts
+#
+- name: bucket-artefacts
+  type: storage.v1.bucket
+  properties:
+    location: us
+    name: bank--artefacts
+    storageClass: STANDARD
+
+#
+# A cloud function
+#
+- name: function-hello-world
+  type: gcp-types/cloudfunctions-v1beta2:projects.locations.functions
+  properties:
+    location: us-central1
+    function: hello-world
+    sourceArchiveUrl: gs://cloud-function-sample/function.zip
+    entryPoint: handler
+    httpsTrigger:
+      url: ""
+  metadata:
+    dependsOn:
+      - bucket-artefacts
