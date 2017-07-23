@@ -18,8 +18,9 @@ const schema = graphql.buildSchema(txtSchema);
 // Run a query against the API.
 // Async, returns a promise.
 //
-function runQuery(query) {
-  return graphql.graphql(schema, query, resolver);
+function runQuery(query, variables = {}) {
+  const context = {};
+  return graphql.graphql(schema, query, resolver, context, variables);
 }
 
 module.exports = {

@@ -18,3 +18,8 @@ test: ## Run the test watcher
 test-once: ## Run the tests once
 	$(NBIN)/ava
 .PHONY: test-once
+
+
+deploy: ## Deploy to GCP Cloud Functions
+	./bin/deploy.sh
+.PHONY: deploy
