@@ -1,45 +1,16 @@
-module Main exposing (..)
+module Main exposing (main)
 
 import Html exposing (Html)
-
-
-type alias Flags =
-    {}
-
-
-type alias Model =
-    {}
-
-
-type Msg
-    = Noop
+import State exposing (..)
+import View exposing (view)
 
 
 main : Program Flags Model Msg
 main =
     Html.programWithFlags
-        { init = init
-        , view = view
-        , update = update
-        , subscriptions = subscriptions
-        }
-
-
-view : Model -> Html Msg
-view view =
-    Html.text "Hello, world!"
+        { init = init, view = view, update = update, subscriptions = subs }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     model ! []
-
-
-init : Flags -> ( Model, Cmd Msg )
-init flags =
-    {} ! []
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none

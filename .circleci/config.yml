@@ -21,7 +21,7 @@ jobs:
 
       - restore_cache:
           keys:
-          - api-node_modules-{{ checksum "api/package.json" }}
+          - backend-node_modules-{{ checksum "backend/package.json" }}
 
 
       #
@@ -46,20 +46,20 @@ jobs:
 
 
       #
-      # API
+      # Backend
       #
 
       - run: |
-          cd api
+          cd backend
           npm install
 
       - save_cache:
           paths:
-            - api/node_modules
-          key: api-node_modules-{{ checksum "api/package.json" }}
+            - backend/node_modules
+          key: backend-node_modules-{{ checksum "backend/package.json" }}
 
       - run: |
-          cd api
+          cd backend
           make test-once
 
 
