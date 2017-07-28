@@ -1,28 +1,85 @@
 version: 2
 jobs:
-  test-happy:
+  build:
     working_directory: ~/bank
     docker:
-      - image: node:6.11.1-alpine
+      - image: node:6.11.1
     steps:
       - checkout
-      - run: apk add --update make
+
+      #
+      # Deps cache
+      #
+
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "happy/package.json" }}
-          - v1-dependencies-
-      - run: cp happy/src/package.json happy/package.json
-      - run: cd happy && npm install
+          - frontend-node_modules-{{ checksum "frontend/package.json" }}
+
+      - restore_cache:
+          keys:
+          - frontend-elm-stuff-{{ checksum "frontend/elm-package.json" }}
+
+      - restore_cache:
+          keys:
+          - api-node_modules-{{ checksum "api/package.json" }}
+
+
+      #
+      # https://github.com/elm-lang/elm-compiler/issues/1473
+      #
+      - restore_cache:
+          keys:
+          - sysconfcpus
+      - run: |
+          if [ ! -d ~/sysconfcpus/bin ]
+          then
+            echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+            git clone https://github.com/obmarg/libsysconfcpus.git
+            cd libsysconfcpus
+            ./configure --prefix="$HOME/sysconfcpus"
+            make && make install
+          fi
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "happy/package.json" }}
-      - run: cd happy && make test-once
+            - ~/sysconfcpus
+          key: sysconfcpus
 
 
+      #
+      # API
+      #
 
-workflows:
-  version: 2
-  test_build_deploy:
-    jobs:
-      - test-happy
+      - run: |
+          cd api
+          npm install
+
+      - save_cache:
+          paths:
+            - api/node_modules
+          key: api-node_modules-{{ checksum "api/package.json" }}
+
+      - run: |
+          cd api
+          make test-once
+
+
+      #
+      # Frontend
+      #
+
+      - run: |
+          cd frontend
+          npm install
+
+      - save_cache:
+          paths:
+            - frontend/elm-stuff
+          key: frontend-elm-stuff-{{ checksum "frontend/elm-package.json" }}
+
+      - run: |
+          cd frontend
+          ~/sysconfcpus/bin/sysconfcpus -n 2 make build
+
+      - run: |
+          cd frontend
+          ~/sysconfcpus/bin/sysconfcpus -n 2 make test-once

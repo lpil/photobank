@@ -1,4 +1,4 @@
-# Happy
+# API
 
 The GraphQL API that powers Bank.
 
