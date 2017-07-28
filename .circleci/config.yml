@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  test-happy:
+    working_directory: ~/bank
+    docker:
+      - image: node:6.11.1-alpine
+    steps:
+      - checkout
+      - run: apk add --update make
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "happy/package.json" }}
+          - v1-dependencies-
+      - run: cp happy/src/package.json happy/package.json
+      - run: cd happy && npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "happy/package.json" }}
+      - run: cd happy && make test-once
+
+
+
+workflows:
+  version: 2
+  test_build_deploy:
+    jobs:
+      - test-happy
