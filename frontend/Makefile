@@ -13,7 +13,6 @@ start: ## Start the dev server
 		--content-base src/, \
 		--no-info \
 		--colors \
-		--port 4000 \
 		--config ./webpack.dev.config.js
 .PHONY: start
 
