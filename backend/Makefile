@@ -6,7 +6,7 @@ NBIN=./node_modules/.bin
 
 
 server: ## Run a dev server
-	node bin/dev-server.js
+	$(NBIN)/nodemon --ext js,json,graphql bin/dev-server.js
 .PHONY: server
 
 
