@@ -6,7 +6,7 @@ help:
 .PHONY: help
 
 
-start: ## Start the dev server
+start: src/Queries.elm ## Start the dev server
 	NODE_ENV=development $(NBIN)/webpack-dev-server \
 		--hot \
 		--inline \
@@ -17,7 +17,7 @@ start: ## Start the dev server
 .PHONY: start
 
 
-build: ## Compile frontend assets
+build: src/Queries.elm ## Compile frontend assets
 	NODE_ENV=production $(NBIN)/webpack \
 		--optimize-minimize \
 		--progress \
@@ -28,14 +28,23 @@ build: ## Compile frontend assets
 
 clean: ## Remove compiled artifacts
 	rm -rf dist
+	rm -rf src/Queries.elm
 .PHONY: clean
 
 
-test-once: ## Run the front end tests
+test-once: src/Queries.elm ## Run the front end tests
 	$(ELM_TEST)
 .PHONY: test-once
 
 
-test: ## Run the front end test watcher
+test: src/Queries.elm ## Run the front end test watcher
 	$(ELM_TEST) --watch
 .PHONY: test
+
+
+#
+# We generate the module the provides the GraphQL queries
+# rather than writing the queries inline in Elm code.
+#
+src/Queries.elm: $(wildcard queries/**/*)
+	bin/generate-queries-module.sh

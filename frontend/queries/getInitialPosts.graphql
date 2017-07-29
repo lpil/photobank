@@ -1,0 +1,10 @@
+query getInitialPosts {
+  posts {
+    text
+    image
+    author {
+      name
+      avatar
+    }
+  }
+}
