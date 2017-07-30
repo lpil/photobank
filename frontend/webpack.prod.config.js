@@ -17,6 +17,13 @@ module.exports = merge(config, {
         query: {
           pathToMake: "node_modules/.bin/elm-make"
         }
+      },
+      {
+        test: /Stylesheets\.elm$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [{ loader: "css-loader" }, { loader: "elm-css-webpack-loader" }]
+        })
       }
     ]
   },

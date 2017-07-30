@@ -1,3 +1,4 @@
+require("./Stylesheets.elm");
 const Elm = require("./Main.elm");
 
 const flags = {
