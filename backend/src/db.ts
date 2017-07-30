@@ -1,12 +1,12 @@
 export interface DbPost {
+  id: number;
   text: string;
+  authorId: number;
 }
 export interface DbAuthor {
+  id: number;
   name: string;
-}
-
-interface Post extends db.DbPost {
-  author: Array<db.DbAuthor>;
+  avatar: string;
 }
 
 //

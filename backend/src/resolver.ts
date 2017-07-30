@@ -8,11 +8,15 @@ interface IdEntity {
   id: number;
 }
 
-export function hello(root, args, context) {
+export function hello(root: object, args: object, context: object): string {
   return "Hello, world!";
 }
 
-export function posts(root, args, context): Array<Post> {
+export function posts(
+  root: object,
+  args: object,
+  context: object
+): Array<Post> {
   const posts = db.getAllPosts();
   // TODO: Can we avoid loading these if it not asked for?
   const postsWithAuthors = loadPostAuthors(posts);
@@ -27,8 +31,9 @@ function loadPostAuthors(posts: Array<db.DbPost>): Array<Post> {
   );
 }
 
-function idMap(entities: Array<IdEntity>): { [s: number]: IdEntity } {
-  const acc = {};
+type IdEntityMap = { [s: number]: IdEntity };
+function idMap(entities: Array<IdEntity>): IdEntityMap {
+  const acc: IdEntityMap = {};
   entities.forEach(e => (acc[e.id] = e));
   return acc;
 }

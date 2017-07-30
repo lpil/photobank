@@ -13,4 +13,4 @@ written in Elm.
 ### Backend
 
 The data provider for the Frontend. A GraphQL API deployed as a Google Cloud
-Function. Written in Javascript.
+Function. Written in Typescript.

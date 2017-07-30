@@ -5,7 +5,9 @@
     "graphql": "^0.10.5"
   },
   "devDependencies": {
+    "@types/graphql": "^0.10.1",
     "@types/node": "^8.0.17",
+    "@types/tape": "^4.2.30",
     "express": "^4.15.3",
     "express-graphql": "^0.6.6",
     "nodemon": "^1.11.0",
