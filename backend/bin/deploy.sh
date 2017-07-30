@@ -10,5 +10,5 @@ echo "Deploying function"
 gcloud beta functions deploy happy \
   --stage-bucket "$BUCKET" \
   --entry-point handler \
-  --local-path src \
+  --local-path dist \
   --trigger-http
