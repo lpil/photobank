@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-BUCKET=gs://bank-functions
+BUCKET=gs://photobank-functions
 
 echo "Ensuring storage bucket exists ($BUCKET)"
 gsutil ls "$BUCKET" > /dev/null || gsutil mb "$BUCKET" && echo "Cool. :)"

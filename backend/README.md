@@ -1,6 +1,6 @@
 # API
 
-The GraphQL API that powers Bank.
+The GraphQL API that powers Photobank.
 
 ```sh
 make server                  # Run a dev server

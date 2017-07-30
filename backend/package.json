@@ -1,6 +1,6 @@
 {
   "name": "happy",
-  "description": "GraphQL API for Bank",
+  "description": "GraphQL API for Photobank",
   "dependencies": {
     "graphql": "^0.10.5"
   },

@@ -1,5 +1,5 @@
 //
-// Happy, the Bank GraphQL API.
+// Happy, the Photobank GraphQL API.
 //
 // This module provides `runQuery`, which runs a GraphQL query
 // on the API.

@@ -1,4 +1,4 @@
-# Bank
+# Photobank
 
 A photo sharing app. :)
 
