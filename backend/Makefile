@@ -3,23 +3,42 @@ help:
 .PHONY: help
 
 NBIN=./node_modules/.bin
-
+EXTS=ts,js,json,graphql
+TEST_CMD=$(NBIN)/ts-node $(NBIN)/tape test/**/*.{ts,js} | $(NBIN)/tap-diff
 
 server: ## Run a dev server
-	$(NBIN)/nodemon --ext js,json,graphql bin/dev-server.js
+	$(NBIN)/nodemon --ext $(EXTS) bin/dev-server.js
 .PHONY: server
 
 
 test: ## Run the test watcher
-	$(NBIN)/ava --watch
+	$(NBIN)/nodemon --ext $(EXTS) --exec "$(TEST_CMD) || true"
 .PHONY: test
 
 
 test-once: ## Run the tests once
-	$(NBIN)/ava
+	$(TEST_CMD)
 .PHONY: test-once
 
 
-deploy: ## Deploy to GCP Cloud Functions
+build: ## Incrementally compile the project
+	$(NBIN)/tsc --watch
+.PHONY: build
+
+
+build-once: ## Compile the project once
+	$(NBIN)/tsc
+.PHONY: build-once
+
+
+clean: ## Delete compiled artefacts
+	rm -r dist
+.PHONY: clean
+
+
+deploy: dist ## Deploy to GCP Cloud Functions
 	./bin/deploy.sh
 .PHONY: deploy
+
+
+dist: build

@@ -1,1 +1,17 @@
-src/package.json
+{
+  "name": "happy",
+  "description": "GraphQL API for Bank",
+  "dependencies": {
+    "graphql": "^0.10.5"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.17",
+    "express": "^4.15.3",
+    "express-graphql": "^0.6.6",
+    "nodemon": "^1.11.0",
+    "tap-diff": "^0.1.1",
+    "tape": "^4.7.0",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.4.2"
+  }
+}
