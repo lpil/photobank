@@ -1,8 +1,10 @@
 query getInitialPosts {
   posts {
+    id
     text
     image
     author {
+      id
       name
       avatar
     }

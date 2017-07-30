@@ -1,15 +1,37 @@
+import * as fs from "fs";
 import * as test from "tape";
 import * as happy from "../src/happy";
 
-test("Hello, world!", async t => {
+test("frontend/getInitialPosts.graphql", async t => {
   t.plan(1);
-  const result = await happy.runQuery(`
-  query MyQuery {
-    hello
-  }`);
+  const query = fs
+    .readFileSync("../frontend/queries/getInitialPosts.graphql")
+    .toString();
+  const result = await happy.runQuery(query);
 
   t.deepEqual(result, {
-    data: { hello: "Hello, world!" }
+    data: {
+      posts: [
+        {
+          id: 1,
+          text: "Hello, world!",
+          image: null,
+          author: { id: 1, avatar: "one.png", name: "Jane" }
+        },
+        {
+          id: 2,
+          text: "Uh, world, are you there?",
+          image: null,
+          author: { id: 1, avatar: "one.png", name: "Jane" }
+        },
+        {
+          id: 3,
+          text: "oops, sorry, I was on the phone",
+          image: null,
+          author: { id: 2, avatar: "two.png", name: "World" }
+        }
+      ]
+    }
   });
 });
 

@@ -21,24 +21,23 @@ test-once: ## Run the tests once
 .PHONY: test-once
 
 
-build: ## Incrementally compile the project
+build-watch: ## Incrementally compile the project
 	$(NBIN)/tsc --watch
+.PHONY: build-watch
+
+
+build: ## Compile the project once
+	$(NBIN)/tsc
 .PHONY: build
 
 
-build-once: ## Compile the project once
-	$(NBIN)/tsc
-.PHONY: build-once
-
-
 clean: ## Delete compiled artefacts
-	rm -r dist
+	rm -fr dist
 .PHONY: clean
 
 
-deploy: dist ## Deploy to GCP Cloud Functions
+deploy: build ## Deploy to GCP Cloud Functions
+	cp package.json dist/
+	cp src/schema.graphql dist/
 	./bin/deploy.sh
 .PHONY: deploy
-
-
-dist: build

@@ -27,13 +27,13 @@ function loadPostAuthors(posts: Array<db.DbPost>): Array<Post> {
   const authors = db.getAuthors(posts.map(post => post.id));
   const authorsDict = idMap(authors);
   return posts.map(post =>
-    Object.assign({ author: authors[post.authorId] }, post)
+    Object.assign({ author: authorsDict[post.authorId] }, post)
   );
 }
 
-type IdEntityMap = { [s: number]: IdEntity };
-function idMap(entities: Array<IdEntity>): IdEntityMap {
-  const acc: IdEntityMap = {};
+type AuthorMap = { [s: number]: db.DbAuthor };
+function idMap(entities: Array<db.DbAuthor>): AuthorMap {
+  const acc: AuthorMap = {};
   entities.forEach(e => (acc[e.id] = e));
   return acc;
 }
