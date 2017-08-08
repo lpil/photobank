@@ -70,6 +70,9 @@ jobs:
       - run: |
           cd frontend
           npm install
+          # Remove once the global Elm dep is removed
+          # https://github.com/tcoopman/elm-css-webpack-loader/issues/20
+          npm install -g elm
 
       - save_cache:
           paths:
