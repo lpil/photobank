@@ -19,10 +19,6 @@ jobs:
           keys:
           - frontend-elm-stuff-{{ checksum "frontend/elm-package.json" }}
 
-      - restore_cache:
-          keys:
-          - backend-node_modules-{{ checksum "backend/package.json" }}
-
 
       #
       # https://github.com/elm-lang/elm-compiler/issues/1473
@@ -49,18 +45,7 @@ jobs:
       # Backend
       #
 
-      - run: |
-          cd backend
-          npm install
-
-      - save_cache:
-          paths:
-            - backend/node_modules
-          key: backend-node_modules-{{ checksum "backend/package.json" }}
-
-      - run: |
-          cd backend
-          make test-once
+      # TODO: Test backend
 
 
       #
