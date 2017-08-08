@@ -1,6 +1,6 @@
 # Photobank
 
-[![CircleCI](https://circleci.com/gh/lpil/photobank.svg?style=svg)](https://circleci.com/gh/lpil/photobank)
+[![CircleCI](https://circleci.com/gh/lpil/photobank.svg?style=shield)](https://circleci.com/gh/lpil/photobank)
 
 A photo sharing app. :)
 
