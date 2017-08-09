@@ -9,6 +9,7 @@ type Class
     = NavBar
 
 
+css : Stylesheet
 css =
     [ body
         [ overflowX auto
@@ -23,5 +24,6 @@ css =
         |> (stylesheet << namespace "dreamwriter")
 
 
+primaryAccentColor : Color
 primaryAccentColor =
     hex "00ffaa"

@@ -19,7 +19,7 @@ module.exports = merge(config, {
         }
       },
       {
-        test: /Stylesheets\.elm$/,
+        test: /Style\.Main\.elm$/,
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
           use: [{ loader: "css-loader" }, { loader: "elm-css-webpack-loader" }]
