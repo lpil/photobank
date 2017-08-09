@@ -2,7 +2,8 @@ module View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import State exposing (..)
+import Update exposing (Model, Msg)
+import Data.Post exposing (Post)
 
 
 view : Model -> Html Msg
@@ -19,16 +20,7 @@ postFeedView posts =
 postView : Post -> Html Msg
 postView post =
     li []
-        [ postAuthorView post
-        , postContentView post
-        ]
-
-
-postAuthorView : Post -> Html Msg
-postAuthorView post =
-    div []
-        [ img [ src post.author.avatar ] []
-        , h3 [] [ text post.author.name ]
+        [ postContentView post
         ]
 
 

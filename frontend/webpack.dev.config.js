@@ -24,7 +24,7 @@ module.exports = merge(config, {
         ]
       },
       {
-        test: /Stylesheets\.elm$/,
+        test: /Style\.Main\.elm$/,
         use: ["style-loader", "css-loader", "elm-css-webpack-loader"]
       }
     ]
