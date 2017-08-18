@@ -14,4 +14,6 @@ written in Elm.
 
 ### Backend
 
-The data provider for the Frontend. An API written in Ruby.
+The data provider for the Frontend, a REST API.
+
+Currently there one implementation in Ruby and one in Elixir.

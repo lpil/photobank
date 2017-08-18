@@ -60,7 +60,7 @@ jobs:
           ~/sysconfcpus/bin/sysconfcpus -n 2 make test-once
 
 
-  test_backend:
+  test_backend_ruby:
     working_directory: ~/photobank
     docker:
       - image: ruby:2.4.1-alpine
@@ -68,25 +68,58 @@ jobs:
     steps:
       - checkout
       - type: cache-restore
-        key: rails-demo-{{ checksum "backend/Gemfile.lock" }}
+        key: backend-ruby-{{ checksum "backend-ruby/Gemfile.lock" }}
 
-      - run: cd backend && bundle install --path vendor/bundle
+      - run: cd backend-ruby && bundle install --path vendor/bundle
 
       - type: cache-save
-        key: rails-demo-{{ checksum "backend/Gemfile.lock" }}
+        key: backend-ruby-{{ checksum "backend-ruby/Gemfile.lock" }}
         paths:
-          - vendor/bundle
+          - backend-ruby/vendor/bundle
 
       - type: shell
-        command: cd backend && ./bin/run_tests.rb
+        command: cd backend-ruby && ./bin/run_tests.rb
 
       - type: shell
-        command: cd backend && rubocop -D .
+        command: cd backend-ruby && rubocop -D .
 
+  test_backend_elixir:
+    working_directory: ~/photobank
+    docker:
+      - image: bitwalker/alpine-elixir:1.5.0
+      - image: circleci/postgres:9.4.12-alpine
+    environment:
+      - MIX_ENV: test
+    steps:
+      - checkout
+      - run: cd backend-elixir && cp mix.lock mix.lock.bak
+
+      # Restore cache
+      - run: apk add tar
+      - restore_cache:
+          key: backend-elixir-{{ checksum "backend-elixir/mix.lock.bak" }}
+
+      # Install deps
+      - run: cd backend-elixir && mix local.hex --force
+      - run: cd backend-elixir && mix local.rebar --force
+      - run: cd backend-elixir && mix deps.get
+      - run: cd backend-elixir && mix deps.compile
+
+      # Cache deps
+      - run: cd backend-elixir && mix clean
+      - save_cache:
+          key: backend-elixir-{{ checksum "backend-elixir/mix.lock.bak" }}
+          paths:
+            - backend-elixir/deps
+            - backend-elixir/_build
+
+      - run: cd backend-elixir && mix compile --warnings-as-errors
+      - run: cd backend-elixir && mix test
 
 workflows:
   version: 2
   all:
     jobs:
       - test_frontend
-      - test_backend
+      - test_backend_ruby
+      - test_backend_elixir
