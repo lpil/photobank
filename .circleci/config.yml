@@ -1,16 +1,11 @@
 version: 2
 jobs:
-  build:
+  test_frontend:
     working_directory: ~/photobank
     docker:
       - image: node:6.11.1
     steps:
       - checkout
-
-      #
-      # Deps cache
-      #
-
       - restore_cache:
           keys:
           - frontend-node_modules-{{ checksum "frontend/package.json" }}
@@ -18,7 +13,6 @@ jobs:
       - restore_cache:
           keys:
           - frontend-elm-stuff-{{ checksum "frontend/elm-package.json" }}
-
 
       #
       # https://github.com/elm-lang/elm-compiler/issues/1473
@@ -40,18 +34,6 @@ jobs:
             - ~/sysconfcpus
           key: sysconfcpus
 
-
-      #
-      # Backend
-      #
-
-      # TODO: Test backend
-
-
-      #
-      # Frontend
-      #
-
       - run: |
           cd frontend
           npm install
@@ -60,9 +42,14 @@ jobs:
           npm install -g elm
 
       - save_cache:
+          key: frontend-elm-stuff-{{ checksum "frontend/elm-package.json" }}
           paths:
             - frontend/elm-stuff
-          key: frontend-elm-stuff-{{ checksum "frontend/elm-package.json" }}
+
+      - save_cache:
+          key: frontend-node_modules-{{ checksum "frontend/package.json" }}
+          paths:
+            - frontend/node_modules
 
       - run: |
           cd frontend
@@ -71,3 +58,35 @@ jobs:
       - run: |
           cd frontend
           ~/sysconfcpus/bin/sysconfcpus -n 2 make test-once
+
+
+  test_backend:
+    working_directory: ~/photobank
+    docker:
+      - image: ruby:2.4.1-alpine
+      # - image: circleci/postgres:9.4.12-alpine
+    steps:
+      - checkout
+      - type: cache-restore
+        key: rails-demo-{{ checksum "backend/Gemfile.lock" }}
+
+      - run: cd backend && bundle install --path vendor/bundle
+
+      - type: cache-save
+        key: rails-demo-{{ checksum "backend/Gemfile.lock" }}
+        paths:
+          - vendor/bundle
+
+      - type: shell
+        command: cd backend && ./bin/run_tests.rb
+
+      - type: shell
+        command: cd backend && rubocop -D .
+
+
+workflows:
+  version: 2
+  all:
+    jobs:
+      - test_frontend
+      - test_backend
