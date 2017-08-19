@@ -10,6 +10,8 @@ defmodule Bank.Feed.Post do
 
   @required_params ~w(text)a
 
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
   schema "posts" do
     field :text, :string
     timestamps()
