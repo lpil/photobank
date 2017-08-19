@@ -4,7 +4,7 @@ defmodule BankWeb.FeedView do
 
   def render("show.json", %{posts: posts}) do
     %{
-      data: %{
+      feed: %{
         items: render_many(posts, PostView, "post.json")
       }
     }

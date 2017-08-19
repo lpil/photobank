@@ -4,7 +4,7 @@ defmodule BankWeb.PostView do
   @post_attrs ~w(id text)a
 
   def render("show.json", %{post: _} = data) do
-    %{data: render("post.json", data)}
+    %{post: render("post.json", data)}
   end
 
   def render("post.json", %{post: post}) do

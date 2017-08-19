@@ -1,6 +1,7 @@
 module Request.Feed exposing (get)
 
 import Http
+import Json.Decode exposing (field)
 import Data.Feed as Feed exposing (Feed)
 import Request
 
@@ -10,4 +11,4 @@ import Request
 get : Http.Request Feed
 get =
     "http://localhost:4000/v1/feed"
-        |> Request.get Feed.decoder
+        |> Request.get (field "feed" Feed.decoder)
