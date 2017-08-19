@@ -1,4 +1,4 @@
-module Data.NewPost exposing (NewPost, Field(..), init, update, encode)
+module Data.NewPost exposing (NewPost, Field(..), init, update, encode, isValid)
 
 import Json.Encode as Encode exposing (Value)
 
@@ -33,3 +33,10 @@ encode : NewPost -> Value
 encode post =
     Encode.object
         [ ( "text", Encode.string post.text ) ]
+
+
+{-| Determine whether a post is valid for creation or not.
+-}
+isValid : NewPost -> Bool
+isValid newPost =
+    not (String.isEmpty newPost.text)
