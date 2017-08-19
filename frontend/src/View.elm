@@ -1,11 +1,11 @@
-module View exposing (view)
+module View exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, onSubmit)
 import Types exposing (Model, Msg(..))
 import Data.Post exposing (Post)
-import Data.NewPost exposing (NewPost, Field(..))
+import Data.NewPost as NewPost exposing (NewPost, Field(..))
 
 
 view : Model -> Html Msg
@@ -68,7 +68,11 @@ newPostView newPost =
                         []
                     ]
                 ]
-            , button [ class "button is-info" ] [ text "Submit" ]
+            , button
+                [ disabled (not (NewPost.isValid newPost))
+                , class "button is-info"
+                ]
+                [ text "Submit" ]
             ]
         ]
 
