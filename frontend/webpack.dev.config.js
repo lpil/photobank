@@ -17,15 +17,19 @@ module.exports = merge(config, {
     loaders: [
       {
         test: /\.elm$/,
-        exclude: [/elm-stuff/, /node_modules/, /Stylesheets\.elm/],
+        exclude: [/elm-stuff/, /node_modules/],
         use: [
           { loader: "elm-hot-loader" },
           { loader: "elm-webpack-loader?debug=true&verbose=true&warn=true" }
         ]
       },
       {
-        test: /Style\.Main\.elm$/,
-        use: ["style-loader", "css-loader", "elm-css-webpack-loader"]
+        test: /\.scss$/,
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+          { loader: "sass-loader" }
+        ]
       }
     ]
   },
