@@ -1,8 +1,10 @@
 module Main exposing (main)
 
 import Html exposing (Html)
+import Http
 import View exposing (view)
-import Update exposing (Msg, Model, update)
+import Update exposing (Msg(..), Model, update)
+import Request.Feed as Feed
 
 
 type alias Flags =
@@ -21,20 +23,9 @@ postImagePlaceholder n =
 
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    let
-        posts =
-            [ { text = "What is imagination?…It is a God-like, a noble faculty. It renders earth tolerable; it teaches us to live, in the tone of the eternal"
-              , image = Just (postImagePlaceholder 0)
-              }
-            , { text = "There are only two hard things in Computer Science: cache invalidation and naming things."
-              , image = Nothing
-              }
-            , { text = "A ship in port is safe, but that is not what ships are for. Sail out to sea and do new things"
-              , image = Just (postImagePlaceholder 2)
-              }
-            ]
-    in
-        { posts = posts } ! []
+    { items = [] }
+        ! [ Http.send RespFeed Feed.get
+          ]
 
 
 subs : Model -> Sub Msg

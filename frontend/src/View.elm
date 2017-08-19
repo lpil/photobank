@@ -8,11 +8,11 @@ import Data.Post exposing (Post)
 
 view : Model -> Html Msg
 view model =
-    postFeedView model.posts
+    feedView model.items
 
 
-postFeedView : List Post -> Html Msg
-postFeedView posts =
+feedView : List Post -> Html Msg
+feedView posts =
     ul [] <|
         List.map postView posts
 
