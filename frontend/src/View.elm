@@ -2,13 +2,30 @@ module View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Update exposing (Model, Msg)
+import Html.Events exposing (onInput, onSubmit)
+import Types exposing (Model, Msg(..))
 import Data.Post exposing (Post)
+import Data.NewPost exposing (NewPost, Field(..))
 
 
 view : Model -> Html Msg
 view model =
-    feedView model.items
+    div []
+        [ newPostView model.newPost
+        , feedView model.posts
+        ]
+
+
+newPostView : NewPost -> Html Msg
+newPostView newPost =
+    Html.form [ onSubmit NewPostSubmit ]
+        [ input
+            [ value newPost.text
+            , required True
+            , onInput (NewPostUpdate Text)
+            ]
+            []
+        ]
 
 
 feedView : List Post -> Html Msg

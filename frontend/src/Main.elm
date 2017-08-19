@@ -3,28 +3,22 @@ module Main exposing (main)
 import Html exposing (Html)
 import Http
 import View exposing (view)
-import Update exposing (Msg(..), Model, update)
+import Types exposing (Msg(..), Model)
+import Update exposing (update)
 import Request.Feed as Feed
+import Data.NewPost as NewPost
 
 
 type alias Flags =
     {}
 
 
-avatarPlaceholder : Int -> String
-avatarPlaceholder n =
-    "http://lorempixel.com/50/50?" ++ (toString n)
-
-
-postImagePlaceholder : Int -> String
-postImagePlaceholder n =
-    "http://lorempixel.com/350/350?" ++ (toString n)
-
-
 init : Flags -> ( Model, Cmd Msg )
 init flags =
-    { items = [] }
-        ! [ Http.send RespFeed Feed.get
+    { posts = []
+    , newPost = NewPost.init
+    }
+        ! [ Http.send RespGetFeed Feed.get
           ]
 
 
@@ -36,4 +30,8 @@ subs model =
 main : Program Flags Model Msg
 main =
     Html.programWithFlags
-        { init = init, view = view, update = update, subscriptions = subs }
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subs
+        }

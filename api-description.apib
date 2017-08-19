@@ -25,9 +25,7 @@ This endpoint can be used by the load balancer to determine instance health.
     + Body
 
             {
-                "data": {
-                    "status": "ok"
-                }
+                "status": "ok"
             }
 
 
@@ -48,12 +46,12 @@ Get the user's feed.
 
     + Attributes (object)
 
-        + `data` (object, required)
+        + `feed` (object, required)
             + `items` (array[FeedPost], required) - Items in the user's feed
     + Body
 
             {
-                "data": {
+                "feed": {
                     "items": [
                         {
                             "id": "96b5fe53-c560-4300-91a2-ea48719dc41f",
@@ -88,7 +86,7 @@ Create a new post for the current user.
 
     + Body
             {
-                "data": {
+                "post": {
                     "text": "Hello, Sailor!"
                 }
             }
@@ -100,7 +98,7 @@ Create a new post for the current user.
     + Body
 
             {
-                "data": {
+                "post": {
                     "id": "69803573-67ce-4f1a-a639-5abf68052456",
                     "type": "post",
                     "text": "Hello, Sailor!"

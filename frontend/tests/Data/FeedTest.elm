@@ -16,8 +16,8 @@ suite =
                     |> Expect.err
         , test "feed with posts" <|
             \_ ->
-                """{
-"data": {
+                """
+{
     "items": [
         {
             "type": "post",
@@ -29,8 +29,7 @@ suite =
             "text": "Bi!"
         }
     ]
-}
-        }"""
+}"""
                     |> decodeString Feed.decoder
                     |> Expect.equal
                         (Ok

@@ -5,7 +5,7 @@ defmodule BankWeb.PostController do
 
   action_fallback BankWeb.FallbackController
 
-  def create(conn, %{"data" => post_params}) do
+  def create(conn, %{"post" => post_params}) do
     with {:ok, %Post{} = post} <- Feed.create_post(post_params) do
       conn
       |> put_status(:created)

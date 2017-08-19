@@ -19,7 +19,7 @@ defmodule BankWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-  plug Corsica, origins: "*"
+  plug Corsica, origins: "*", allow_headers: ["accept", "content-type"]
 
   plug BankWeb.Router
 

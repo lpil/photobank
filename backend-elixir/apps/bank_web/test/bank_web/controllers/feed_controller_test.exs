@@ -18,7 +18,7 @@ defmodule BankWeb.FeedControllerTest do
 
     test "lists all posts", ctx do
       conn = get(ctx.conn, "/v1/feed")
-      assert json_response(conn, 200)["data"] == %{
+      assert json_response(conn, 200)["feed"] == %{
         "items" => [
           %{
             "id" => ctx.post.id,
