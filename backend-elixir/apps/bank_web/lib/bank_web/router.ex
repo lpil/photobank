@@ -5,7 +5,9 @@ defmodule BankWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", BankWeb do
+  scope "/v1", BankWeb do
     pipe_through :api
+
+    resources "/feed", FeedController, only: [:show], singleton: true
   end
 end
