@@ -11,7 +11,6 @@ module.exports = {
   },
 
   module: {
-    noParse: /^((?!Style).)*\.elm.*$/,
     loaders: []
   },
 

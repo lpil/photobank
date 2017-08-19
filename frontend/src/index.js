@@ -1,4 +1,4 @@
-require("./Style/Main.elm");
+require("./style/main.scss");
 const Elm = require("./Main.elm");
 
 const flags = {
