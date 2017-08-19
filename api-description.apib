@@ -34,7 +34,7 @@ This endpoint can be used by the load balancer to determine instance health.
 ## Feed [/v1/feed]
 
 A Feed is the singleton resource that represents a user's feed. It contains a
-number of posts.
+number of items which can be posts.
 
 ### Get current feed [GET]
 
@@ -48,19 +48,21 @@ Get the user's feed.
 
     + Attributes (object)
 
-        + `data` (object, required) - Indication that the export is queued for processing later.
-            + `items` (array[Post], required) - Items in the user's feed
+        + `data` (object, required)
+            + `items` (array[FeedPost], required) - Items in the user's feed
     + Body
 
             {
                 "data": {
                     "items": [
                         {
+                            "id": "96b5fe53-c560-4300-91a2-ea48719dc41f",
                             "type": "post",
                             "text": "Hello, Sailor!",
                             "image": "https://cdn.example.com/my-cool-pic.gif"
                         },
                         {
+                            "id": "50957811-6490-4b16-853f-d0069aca8bab",
                             "type": "post",
                             "text": "No image here!"
                         }
@@ -69,13 +71,51 @@ Get the user's feed.
             }
 
 
+## Post [/v1/posts]
+
+A post. The common item of content that a user can create.
+
+### Create new post [POST]
+
+Create a new post for the current user.
+
++ Request (application/json)
+
+    + Attributes (object)
+
+        + `data` (object, required)
+            + `text` (string, required) - Textual content of the post.
+
+    + Body
+            {
+                "data": {
+                    "text": "Hello, Sailor!"
+                }
+            }
+
++ Response 201 (application/json; charset=utf-8)
+
+    A successfully created Post.
+
+    + Body
+
+            {
+                "data": {
+                    "id": "69803573-67ce-4f1a-a639-5abf68052456",
+                    "type": "post",
+                    "text": "Hello, Sailor!"
+                }
+            }
+
+
 # Data structures
 
-## Post (object)
+## FeedPost (object)
 
 Posts are the resource that fills the user's feed. They are items of content
 with optional text and image that are posted by other users.
 
++ `id` (string, required) - The unique id (a UUID) for the post.
 + `type` (string, required) - Always the string "post".
 + `text` (string, required) - The textual content of the post.
 + `image` (string) - An optional link to an image associated with the post.

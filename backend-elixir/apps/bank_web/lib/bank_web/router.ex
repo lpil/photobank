@@ -9,5 +9,6 @@ defmodule BankWeb.Router do
     pipe_through :api
 
     resources "/feed", FeedController, only: [:show], singleton: true
+    resources "/posts", PostController, only: [:create]
   end
 end
