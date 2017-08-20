@@ -6,6 +6,8 @@ jobs:
       - image: node:6.11.1
     steps:
       - checkout
+      - attach_workspace:
+          at: /tmp/workspace
       - restore_cache:
           keys:
           - frontend-node_modules-{{ checksum "frontend/package.json" }}
@@ -59,6 +61,11 @@ jobs:
           cd frontend
           ~/sysconfcpus/bin/sysconfcpus -n 2 make test-once
 
+      - persist_to_workspace:
+          root: .
+          paths:
+            - frontend/dist/*
+
 
   test_backend_ruby:
     working_directory: ~/photobank
@@ -95,7 +102,7 @@ jobs:
       - run: cd backend-elixir && cp mix.lock mix.lock.bak
 
       # Restore cache
-      - run: apk add tar
+      - run: apk add --update tar
       - restore_cache:
           key: backend-elixir-{{ checksum "backend-elixir/mix.lock.bak" }}
 
@@ -116,6 +123,19 @@ jobs:
       - run: cd backend-elixir && mix compile --warnings-as-errors
       - run: cd backend-elixir && mix test
 
+  build_docker_elixir:
+    working_directory: ~/photobank
+    docker:
+      - image: alpine
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: apk add --update docker git ca-certificates
+      - run: update-ca-certificates
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: ./bin/ci-docker-image-build-push.sh
+
 workflows:
   version: 2
   all:
@@ -123,3 +143,10 @@ workflows:
       - test_frontend
       - test_backend_ruby
       - test_backend_elixir
+      - build_docker_elixir:
+          requires:
+            - test_frontend
+            - test_backend_elixir
+          filters:
+            branches:
+              only: /^master$/

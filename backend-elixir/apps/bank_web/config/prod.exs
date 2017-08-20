@@ -15,8 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :bank_web, BankWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  url: [host: "example.com", port: 80]
 
 # ## SSL Support
 #
@@ -58,4 +57,4 @@ config :bank_web, BankWeb.Endpoint,
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
