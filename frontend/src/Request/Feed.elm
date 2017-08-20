@@ -10,5 +10,5 @@ import Request
 -}
 get : Http.Request Feed
 get =
-    "http://localhost:4000/v1/feed"
+    "/v1/feed"
         |> Request.get (field "feed" Feed.decoder)
