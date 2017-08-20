@@ -5,7 +5,7 @@ require_relative "v1/base"
 
 module Photobank
   class API < Grape::API
-    version "v1", using: :path, vendor: 'Photobank'
+    version "v1", using: :path
     format :json
 
     get :ping do

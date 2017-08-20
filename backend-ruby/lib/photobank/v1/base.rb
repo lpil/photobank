@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "grape"
 require_relative "feed"
 require_relative "user_post"
@@ -9,4 +11,4 @@ module Photobank
       mount Photobank::V1::UserPost
     end
   end
-end 
+end
