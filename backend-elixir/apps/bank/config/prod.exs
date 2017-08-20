@@ -1,3 +1,8 @@
 use Mix.Config
 
-import_config "prod.secret.exs"
+config :bank, Bank.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "bank_prod",
+  pool_size: 15
