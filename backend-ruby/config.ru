@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "lib/photobank/web"
+require_relative "lib/photobank/api"
 
-run Photobank::Web
+run Photobank::API
