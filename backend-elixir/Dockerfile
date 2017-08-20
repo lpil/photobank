@@ -1,8 +1,7 @@
 FROM bitwalker/alpine-elixir:1.5.0
 MAINTAINER Louis Pilfold <louis@lpil.uk>
 
-EXPOSE 4000
-ENV PORT=4000 MIX_ENV=prod
+ENV MIX_ENV=prod
 
 # Add deps and config
 ADD ./mix* /photobank/
@@ -33,4 +32,5 @@ RUN mix compile
 RUN adduser -S www-photobank
 USER www-photobank
 
-CMD ["mix", "phx.server"]
+ADD ./bin /photobank/bin
+CMD ["sh", "./bin/prod-start.sh"]

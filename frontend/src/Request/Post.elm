@@ -20,4 +20,4 @@ create newPost =
         Request.post
             json
             (field "post" Post.decoder)
-            "http://localhost:4000/v1/posts"
+            "/v1/posts"

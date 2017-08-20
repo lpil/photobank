@@ -147,6 +147,6 @@ workflows:
           requires:
             - test_frontend
             - test_backend_elixir
-          filters:
-            branches:
-              only: /^master$/
+          # filters:
+          #   branches:
+          #     only: /^master$/
