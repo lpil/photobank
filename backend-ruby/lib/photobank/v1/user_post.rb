@@ -4,7 +4,7 @@ module Photobank
   module V1
     class UserPost < Grape::API
       post :posts do
-      	{ ping: :pong }
+        { ping: :pong }
       end
     end
   end
