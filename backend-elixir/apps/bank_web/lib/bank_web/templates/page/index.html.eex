@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<%#
+  If you edit this file, also edit the frontend index.html that is used
+  only in development.
+%><html lang="en">
+  <head>
+    <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="<%= manifest_asset_path "main.css" %>" rel="stylesheet"></head>
+  </head>
+  <body>
+    <div id="js-app">
+    </div>
+    <script type="text/javascript" src="<%= manifest_asset_path "main.js" %>"></script>
+  </body>
+</html>
