@@ -90,6 +90,7 @@ jobs:
       - type: shell
         command: cd backend-ruby && rubocop -D .
 
+
   test_backend_elixir:
     working_directory: ~/photobank
     docker:
@@ -123,6 +124,26 @@ jobs:
       - run: cd backend-elixir && mix compile --warnings-as-errors
       - run: cd backend-elixir && mix test
 
+
+  test_backend_node:
+    working_directory: ~/photobank
+    docker:
+      - image: node:6.11.1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - restore_cache:
+          keys:
+          - backend_node-node_modules-{{ checksum "backend-node/package.json" }}
+      - run: cd backend-node && npm install
+      - save_cache:
+          paths:
+            - backend-node/node_modules
+          key: backend_node-node_modules-{{ checksum "backend-node/package.json" }}
+      - run: cd backend-node && make test-once
+
+
   build_docker_elixir:
     working_directory: ~/photobank
     docker:
@@ -136,6 +157,7 @@ jobs:
           at: /tmp/workspace
       - run: ./bin/ci-docker-image-build-push.sh
 
+
 workflows:
   version: 2
   all:
@@ -143,10 +165,8 @@ workflows:
       - test_frontend
       - test_backend_ruby
       - test_backend_elixir
+      - test_backend_node
       - build_docker_elixir:
           requires:
             - test_frontend
             - test_backend_elixir
-          # filters:
-          #   branches:
-          #     only: /^master$/
