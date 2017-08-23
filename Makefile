@@ -16,3 +16,11 @@ deploy-staging: ## Deploy latest master image to staging
 
 logs-staging: ## View staging logs
 	heroku logs -a photobank-staging --tail
+.PHONY: logs-staging
+
+
+migrate-staging: ## Migrate staging datbase
+	heroku run -a photobank-staging HOME=/opt/app MIX_ENV=prod mix ecto.migrate
+.PHONY: migrate-staging
+
+
