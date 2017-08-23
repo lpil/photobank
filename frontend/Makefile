@@ -1,5 +1,4 @@
-NBIN=$(shell pwd)/node_modules/.bin
-ELM_TEST=$(NBIN)/elm-test --compiler $(NBIN)/elm-make
+export PATH := ./node_modules/.bin:$(PATH)
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -7,7 +6,7 @@ help:
 
 
 start: ## Start the dev server
-	NODE_ENV=development $(NBIN)/webpack-dev-server \
+	NODE_ENV=development webpack-dev-server \
 		--hot \
 		--inline \
 		--content-base src/, \
@@ -18,7 +17,7 @@ start: ## Start the dev server
 
 
 build: ## Compile frontend assets
-	NODE_ENV=production $(NBIN)/webpack \
+	NODE_ENV=production webpack \
 		--optimize-minimize \
 		--progress \
 		--bail \
@@ -32,10 +31,10 @@ clean: ## Remove compiled artifacts
 
 
 test-once: ## Run the front end tests
-	$(ELM_TEST)
+	elm-test
 .PHONY: test-once
 
 
 test: ## Run the front end test watcher
-	$(ELM_TEST) --watch
+	elm-test --watch
 .PHONY: test
