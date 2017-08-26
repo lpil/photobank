@@ -1,0 +1,7 @@
+{
+  "name": "photobank",
+  "devDependencies": {
+    "bs-jest": "^0.1.0",
+    "bs-platform": "1.9.0"
+  }
+}

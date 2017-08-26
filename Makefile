@@ -22,5 +22,3 @@ logs-staging: ## View staging logs
 migrate-staging: ## Migrate staging datbase
 	heroku run -a photobank-staging HOME=/opt/app MIX_ENV=prod mix ecto.migrate
 .PHONY: migrate-staging
-
-

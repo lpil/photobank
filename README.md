@@ -16,5 +16,4 @@ written in Elm.
 
 The data provider for the Frontend, a REST API.
 
-Currently there one implementation in Ruby, one in Elixir, and another in
-Typescript/Node. Getting a bit silly.
+Currently there is a bajillion half implemented version of the backend.
